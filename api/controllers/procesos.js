@@ -59,7 +59,7 @@ exports.getUser = function (req, res) {
       else {
         if (err) throw err
         else {
-          
+
           const user = rows[0];
           user.firma = makebase64(user.firma.toJSON())
           return res.json(user)
@@ -82,7 +82,7 @@ exports.getUser = function (req, res) {
   }
 }
 
-exports.listarEmpleados = function (req, res) {
+/* exports.listarEmpleados = function (req, res) {
   const sql = `SELECT * FROM persona NATURAL JOIN empleado`;
   mysqlConnection.query(sql, (err, rows, fields) => {
     if (err) throw err;
@@ -90,9 +90,9 @@ exports.listarEmpleados = function (req, res) {
       res.json(rows);
     }
   });
-}
+} */
 
-exports.obtenerEmpleado = function (req, res) {
+/* exports.obtenerEmpleado = function (req, res) {
   const { id } = req.params;
   console.log(id);
   let sql = 'SELECT * FROM `persona` WHERE `cedula`= ?'
@@ -104,9 +104,9 @@ exports.obtenerEmpleado = function (req, res) {
 
     }
   })
-}
+} */
 
-exports.crearEmpleado = function (req, res) {
+/* exports.crearEmpleado = function (req, res) {
   const {
     cedula, apellido1, apellido2, nombre1, nombre2, email,
     password, telefono, direccion, sexo, fnacimiento, firma, rol
@@ -137,9 +137,9 @@ exports.crearEmpleado = function (req, res) {
   } catch (error) {
     console.log(error);
   }
-}
+} */
 
-exports.editarEmpleado = function (req, res) {
+/* exports.editarEmpleado = function (req, res) {
   const {
     cedula,
     apellido1,
@@ -163,9 +163,9 @@ exports.editarEmpleado = function (req, res) {
       res.json({ status: 'OK: Usuario actualizado' });
     }
   })
-}
+} */
 
-exports.deleteEmpleado = function (req, res) {
+/* exports.deleteEmpleado = function (req, res) {
   console.log('id:', req.params.id);
   const { id } = req.params
   let sql = `DELETE FROM empleado WHERE cedula = ${id};`;
@@ -181,7 +181,7 @@ exports.deleteEmpleado = function (req, res) {
       })
     }
   })
-}
+} */
 
 /* Administradores */
 
@@ -246,9 +246,76 @@ exports.deleteAdmin = function (req, res) {
   })
 }
 
-/* Permisos */
+/******************  Motivos **********************/
 
-exports.getIds = function (req, res) {
+/* exports.listarMotivos = function (req, res) {
+  const sql = `SELECT * FROM motivo`;
+  mysqlConnection.query(sql, (err, rows, fields) => {
+    if (err) throw err;
+    else {
+      res.json(rows);
+    }
+  });
+} */
+
+/* exports.obtenerMotivo = function (req, res) {
+  const { id } = req.params;
+  console.log(id);
+  let sql = 'SELECT * FROM `motivo` WHERE `codMotivo`= ?'
+  mysqlConnection.query(sql, [id], (err, rows, fields) => {
+    if (err) throw err;
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+} */
+
+/* metodo para editar 1 */
+/* exports.editarMotivo = function (req, res) {
+  const { codMotivo, detalleMotivo, descripcion } = req.body;
+  const sql = 'UPDATE motivo SET codMotivo = ?, detalleMotivo = ?, descripcion = ? WHERE codMotivo = ?'
+  mysqlConnection.query(sql, [codMotivo, detalleMotivo, descripcion, codMotivo], (err, rows, fields) => {
+    if (err) {
+      throw err;
+    } else {
+      res.json({ status: 'OK: Motivo actualizado' });
+    }
+  })
+} */
+
+/* exports.crearMotivo = function (req, res) {
+  const { codMotivo, detalleMotivo, descripcion } = req.body;
+  console.log('entro');
+  const sql = 'INSERT INTO `motivo` (`codMotivo`, `detalleMotivo`, `descripcion`) VALUES (?, ?, ?); ';
+  mysqlConnection.query(sql, [codMotivo, detalleMotivo, descripcion], (err, rows, fields) => {
+    if (err) throw err
+    else {
+      if (err) throw err
+      else {
+        // console.log('test consulta empleado'); 
+        res.json({ status: 'OK: Motivo agregado' })
+      }
+    }
+  });
+} */
+
+/* exports.deleteMotivo = function (req, res) {
+  console.log('id:', req.params.id);
+  const { id } = req.params
+  let sql = `DELETE FROM motivo WHERE codMotivo = '${id}'`
+  mysqlConnection.query(sql, (err, rows, fields) => {
+    if (err) throw err
+    else {
+      res.json({ status: 'eliminado' })
+      console.log(res.json);
+    }
+  });
+} */
+
+/* ************************* permisos **********************************/
+
+/* exports.getIds = function (req, res) {
   const { cedulaAdmin, cedulaEmpleado } = req.body;
   let sql = 'SELECT idAdministrativo FROM administrativo WHERE cedula = ?';
   mysqlConnection.query(sql, [cedulaAdmin], (err, rows, fields) => {
@@ -274,80 +341,9 @@ exports.getIds = function (req, res) {
       }
     }
   })
-}
+} */
 
-
-/* Motivos */
-
-exports.listarMotivos = function (req, res) {
-  const sql = `SELECT * FROM motivo`;
-  mysqlConnection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    else {
-      res.json(rows);
-    }
-  });
-}
-
-exports.obtenerMotivo = function (req, res) {
-  const { id } = req.params;
-  console.log(id);
-  let sql = 'SELECT * FROM `motivo` WHERE `codMotivo`= ?'
-  mysqlConnection.query(sql, [id], (err, rows, fields) => {
-    if (err) throw err;
-    else {
-      console.log(rows);
-      res.json(rows)
-
-    }
-  })
-}
-
-/* metodo para editar 1 */
-exports.editarMotivo = function (req, res) {
-  const { codMotivo, detalleMotivo, descripcion } = req.body;
-  const sql = 'UPDATE motivo SET codMotivo = ?, detalleMotivo = ?, descripcion = ? WHERE codMotivo = ?'
-  mysqlConnection.query(sql, [codMotivo, detalleMotivo, descripcion, codMotivo], (err, rows, fields) => {
-    if (err) {
-      throw err;
-    } else {
-      res.json({ status: 'OK: Motivo actualizado' });
-    }
-  })
-}
-
-exports.crearMotivo = function (req, res) {
-  const { codMotivo, detalleMotivo, descripcion } = req.body;
-  console.log('entro');
-  const sql = 'INSERT INTO `motivo` (`codMotivo`, `detalleMotivo`, `descripcion`) VALUES (?, ?, ?); ';
-  mysqlConnection.query(sql, [codMotivo, detalleMotivo, descripcion], (err, rows, fields) => {
-    if (err) throw err
-    else {
-      if (err) throw err
-      else {
-        /* console.log('test consulta empleado'); */
-        res.json({ status: 'OK: Motivo agregado' })
-      }
-    }
-  })
-}
-
-exports.deleteMotivo = function (req, res) {
-  console.log('id:', req.params.id);
-  const { id } = req.params
-  let sql = `DELETE FROM motivo WHERE codMotivo = '${id}'`
-  mysqlConnection.query(sql, (err, rows, fields) => {
-    if (err) throw err
-    else {
-      res.json({ status: 'eliminado' })
-      console.log(res.json);
-    }
-  })
-}
-
-/* ************************* permisos **********************************/
-
-exports.crearPermiso = function (req, res) {
+/* exports.crearPermiso = function (req, res) {
   const { idAdministrativo, idEmpleado, fpermiso, fsalida, fentrada, observaciones, codMotivo } = req.body;
   const sql = 'INSERT INTO permiso (idPermiso, idAdministrativo, idEmpleado, fpermiso, fsalida, fentrada, observaciones, codMotivo) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)';
   mysqlConnection.query(sql, [idAdministrativo, idEmpleado, fpermiso, fsalida, fentrada, observaciones, codMotivo], (err, rows, fields) => {
@@ -359,18 +355,18 @@ exports.crearPermiso = function (req, res) {
       }
     }
   })
-}
+} */
 
-exports.obtenerPermisos = function (req, res) {
+/* exports.listarPermisos = function (req, res) {
   const { id } = req.params;
   const sql = 'SELECT cedula, nombre1, apellido1, fpermiso, fsalida, fentrada, detalleMotivo FROM permiso inner join empleado using(idEmpleado) INNER JOIN persona USING (cedula) INNER JOIN motivo USING(codMotivo) WHERE idAdministrativo = ?;'
-  mysqlConnection.query(sql, [id], (err, rows, fields)=>{
-    if(err) throw err;
-    else{
+  mysqlConnection.query(sql, [id], (err, rows, fields) => {
+    if (err) throw err;
+    else {
       res.json(rows);
     }
   })
-}
+} */
 
 
 
