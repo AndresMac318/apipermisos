@@ -1,7 +1,7 @@
 const express = require('express');
 const mysqlConnection = require('../connection/connection');
 
-exports.login = function (req, res) {
+/* exports.login = function (req, res) {
   const { email, password } = req.body;
   let sql = `SELECT * FROM persona WHERE email = ? AND password = ?;`;
   mysqlConnection.query(sql, [email, password], (err, rows, fields) => {
@@ -40,7 +40,7 @@ exports.login = function (req, res) {
       console.log(err);
     }
   });
-}
+} */
 
 function makebase64(buff) {
   let bufferOriginal = Buffer.from(buff.data).toString("base64");

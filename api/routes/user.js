@@ -5,7 +5,7 @@ const router = express.Router();
 const proceso = require('../controllers/procesos');
 
 //auth
-router.post('/login', proceso.login);
+//router.post('/login', proceso.login);
 router.post('/me', proceso.getUser);
 
 //empleados

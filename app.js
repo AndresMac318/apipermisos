@@ -19,11 +19,13 @@ app.use(express.json());
 
 app.use(cors());
 
+const authRoute = require('./api/routes/auth.route');
 const userRoute = require('./api/routes/user');
 const empleadosRoute = require('./api/routes/empleados.route');
 const motivosRoute = require('./api/routes/motivos.route');
 const permisosRoute = require('./api/routes/permisos.route');
 
+app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/empleados', empleadosRoute);
 app.use('/motivos', motivosRoute);
