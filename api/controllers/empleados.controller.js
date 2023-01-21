@@ -1,5 +1,6 @@
 const { response } = require('express');
 const mysqlConnection = require('../connection/connection');
+const bcrypt = require('bcryptjs');
 
 const listarEmpleados = async (req, res = response) => {
     const sql = `SELECT * FROM persona NATURAL JOIN empleado`;
@@ -29,6 +30,11 @@ const crearEmpleado = async (req, res = response) => {
         cedula, apellido1, apellido2, nombre1, nombre2, email,
         password, telefono, direccion, sexo, fnacimiento, firma, rol
     } = req.body;
+
+    /* Hash password */
+    /* const salt = bcrypt.genSaltSync();
+    passHash = bcrypt.hashSync(password, salt); */
+
     //console.log('entro');
     const sql = 'INSERT INTO `persona` (`cedula`, `apellido1`, `apellido2`, `nombre1`, `nombre2`, `email`, `password`, `telefono`, `direccion`, `sexo`, `fnacimiento`, `firma`, `rol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ';
 
