@@ -2,6 +2,13 @@ const { response } = require('express');
 const mysqlConnection = require('../connection/connection');
 const bcrypt = require('bcryptjs');
 
+function makebase64(buff) {
+    let bufferOriginal = Buffer.from(buff.data).toString("base64");
+    let buff2 = Buffer.from(bufferOriginal, 'base64');
+    let text = buff2.toString('ascii');
+    return text;
+}
+
 const listarEmpleados = async (req, res = response) => {
     const sql = `SELECT * FROM persona NATURAL JOIN empleado`;
     await mysqlConnection.query(sql, (err, rows, fields) => {
@@ -20,14 +27,16 @@ const obtenerEmpleado = async (req, res = response) => {
         if (err) throw err;
         else {
             //console.log(rows);
-            res.json(rows);
+            const empleado = rows[0];
+            empleado.firma = makebase64(empleado.firma.toJSON())
+            res.json({ status: true, empleado });
         }
     });
 }
 
 const crearEmpleado = async (req, res = response) => {
     const {
-        cedula, apellido1, apellido2, nombre1, nombre2, email,
+        idHuella, cedula, apellido1, apellido2, nombre1, nombre2, email,
         password, telefono, direccion, sexo, fnacimiento, firma, rol
     } = req.body;
 
@@ -36,10 +45,10 @@ const crearEmpleado = async (req, res = response) => {
     passHash = bcrypt.hashSync(password, salt); */
 
     //console.log('entro');
-    const sql = 'INSERT INTO `persona` (`cedula`, `apellido1`, `apellido2`, `nombre1`, `nombre2`, `email`, `password`, `telefono`, `direccion`, `sexo`, `fnacimiento`, `firma`, `rol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ';
+    const sql = 'INSERT INTO `persona` (`id_huella`, `cedula`, `apellido1`, `apellido2`, `nombre1`, `nombre2`, `email`, `password`, `telefono`, `direccion`, `sexo`, `fnacimiento`, `firma`, `rol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ';
 
     try {
-        await mysqlConnection.query(sql, [cedula, apellido1, apellido2, nombre1, nombre2, email, password, telefono, direccion, sexo, fnacimiento, firma, rol], async (err, rows, fields) => {
+        await mysqlConnection.query(sql, [idHuella, cedula, apellido1, apellido2, nombre1, nombre2, email, password, telefono, direccion, sexo, fnacimiento, firma, rol], async (err, rows, fields) => {
             try {
                 if (err) throw err
                 else {
@@ -48,14 +57,17 @@ const crearEmpleado = async (req, res = response) => {
                     await mysqlConnection.query(sql1, [cedula], (err, rows, fields) => {
                         if (err) throw err
                         else {
-                            return res.json({ status: 'OK: Empleado agregado' })
+                            return res.json({ status: true, msg: 'empleado agregado' })
                         }
                     })
                 }
             } catch (error) {
-                let msg = "error";
+                let msg = "ocurrio un error consulte con el administrador";
                 //?console.log(msg)
-                return res.json(msg);
+                return res.json({
+                    status: false,
+                    msg: msg
+                });
             }
         });
     } catch (error) {

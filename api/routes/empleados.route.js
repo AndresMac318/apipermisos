@@ -1,7 +1,13 @@
 const { Router } = require('express');
 
 //controladores
-const { listarEmpleados, obtenerEmpleado, crearEmpleado, editarEmpleado, borrarEmpleado } = require('../controllers/empleados.controller');
+const {
+    listarEmpleados,
+    obtenerEmpleado,
+    crearEmpleado,
+    editarEmpleado,
+    borrarEmpleado
+} = require('../controllers/empleados.controller');
 
 const router = Router();
 

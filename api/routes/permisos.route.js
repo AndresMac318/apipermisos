@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 //controladores
-const { getIds, listarPermisos, crearPermiso, listarSolicitudes, borrarPermiso } = require('../controllers/permisos.controller');
+const { getIds, listarPermisos, crearPermiso, listarSolicitudes, borrarPermiso, obtenerPermiso, editarPermiso, obtenerPermisoE } = require('../controllers/permisos.controller');
 
 const router = Router();
 
@@ -9,6 +9,12 @@ const router = Router();
 router.post('/', crearPermiso);
 
 router.get('/:id', listarPermisos);
+
+router.get('/employee/:id', obtenerPermiso);
+
+router.get('/employee2/:id', obtenerPermisoE);
+
+router.put('/:id', editarPermiso);
 
 router.post('/solicitudes', listarSolicitudes);
 

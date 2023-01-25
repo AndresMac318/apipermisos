@@ -21,12 +21,14 @@ app.use(cors());
 
 const authRoute = require('./api/routes/auth.route');
 const userRoute = require('./api/routes/user');
+const adminsRoute = require('./api/routes/admins.route');
 const empleadosRoute = require('./api/routes/empleados.route');
 const motivosRoute = require('./api/routes/motivos.route');
 const permisosRoute = require('./api/routes/permisos.route');
 
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+app.use('/admins', adminsRoute);
 app.use('/empleados', empleadosRoute);
 app.use('/motivos', motivosRoute);
 app.use('/permisos', permisosRoute);

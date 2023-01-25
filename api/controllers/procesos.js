@@ -43,7 +43,7 @@ exports.getUser = function (req, res) {
 
 /* Administradores */
 
-exports.listarAdmins = function (req, res) {
+/* exports.listarAdmins = function (req, res) {
   const sql = `SELECT * FROM persona NATURAL JOIN administrativo`;
   mysqlConnection.query(sql, (err, rows, fields) => {
     if (err) throw err;
@@ -51,9 +51,9 @@ exports.listarAdmins = function (req, res) {
       res.json(rows);
     }
   });
-}
+} */
 
-exports.crearAdmin = function (req, res) {
+/* exports.crearAdmin = function (req, res) {
   const {
     cedula,
     apellido1,
@@ -84,9 +84,9 @@ exports.crearAdmin = function (req, res) {
       })
     }
   })
-}
+} */
 
-exports.deleteAdmin = function (req, res) {
+/* exports.deleteAdmin = function (req, res) {
   console.log('id:', req.params.id);
   const { id } = req.params;
   let sql = `DELETE FROM administrativo WHERE cedula = ${id};`;
@@ -102,5 +102,5 @@ exports.deleteAdmin = function (req, res) {
       })
     }
   })
-}
+} */
 

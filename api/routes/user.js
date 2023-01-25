@@ -16,9 +16,9 @@ router.post('/me', proceso.getUser);
 //router.put('/empleados/:id', proceso.editarEmpleado);
 
 //admins
-router.get('/admins', proceso.listarAdmins);
-router.post('/admins', proceso.crearAdmin);
-router.delete('/admins/:id', proceso.deleteAdmin);
+//router.get('/admins', proceso.listarAdmins);
+//router.post('/admins', proceso.crearAdmin);
+//router.delete('/admins/:id', proceso.deleteAdmin);
 
 //permisos
 //router.post('/permisos', proceso.crearPermiso);

@@ -18,7 +18,7 @@ const obtenerMotivo = async (req, res = response) => {
     await mysqlConnection.query(sql, [id], (err, rows, fields) => {
         if (err) throw err;
         else {
-            console.log(rows);
+            //console.log(rows);
             res.json(rows);
         }
     });
